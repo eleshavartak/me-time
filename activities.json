@@ -1,0 +1,21 @@
+{
+  "activities": [
+    { "id": "breathing", "name": "Do a short breathing exercise", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
+    { "id": "unclench-jaw", "name": "Unclench your jaw and drop your shoulders", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
+    { "id": "soles-of-feet", "name": "Feel the soles of your feet", "tiers": ["2min", "5min"], "category": "ground", "note": "Kristin Neff", "links": ["https://self-compassion.org/self-compassion-practices/"] },
+    { "id": "step-outside", "name": "Step outside for some fresh air", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
+    { "id": "look-far", "name": "Look out a window at something far away", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
+    { "id": "sit-still", "name": "Sit and do nothing, or lie down", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
+    { "id": "sunlight", "name": "Get some sunlight", "tiers": ["2min", "5min"], "category": "ground", "note": "Best in the morning", "links": [] },
+    { "id": "warm-drink", "name": "Make a warm drink and sip it slowly, no phone", "tiers": ["5min"], "category": "ground", "note": null, "links": [] },
+    { "id": "favourite-song", "name": "Put on one song you love", "tiers": ["2min", "5min"], "category": "lighten", "note": null, "links": [] },
+    { "id": "self-compassion-break", "name": "Take a self-compassion break", "tiers": ["5min"], "category": "kindness", "note": "Kristin Neff", "links": ["https://self-compassion.org/self-compassion-practices/"] },
+    { "id": "pranayam", "name": "Do some pranayam", "tiers": ["15min", "30min"], "category": "ground", "note": "Saurabh Bothra", "links": ["https://youtu.be/I77hh5I69gA", "https://youtu.be/AzfLp4G1KU4"] },
+    { "id": "doodle", "name": "Doodle freely, no goal", "tiers": ["15min", "30min"], "category": "create", "note": null, "links": [] },
+    { "id": "standup", "name": "Watch a stand-up comedy set", "tiers": ["15min", "30min"], "category": "lighten", "note": null, "links": [] },
+    { "id": "stretch", "name": "Do a slow full-body stretch or shoulder rolls", "tiers": ["2min", "5min"], "category": "move", "note": null, "links": [] },
+    { "id": "workout", "name": "Go to the gym or do a workout", "tiers": ["30min", "60min"], "category": "move", "note": null, "links": [] },
+    { "id": "call-friend", "name": "Call or meet a friend for a proper chat", "tiers": ["30min", "60min"], "category": "connect", "note": null, "links": [] },
+    { "id": "make-art", "name": "Paint or make some art", "tiers": ["30min", "60min"], "category": "create", "note": null, "links": [] }
+  ]
+}

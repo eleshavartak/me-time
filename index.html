@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Me Time</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <!-- Screen 1: pick a time -->
+    <section id="picker-screen">
+      <header class="intro">
+        <h1>Me Time</h1>
+        <p class="subtitle">Roughly how much time do you have?</p>
+      </header>
+      <div class="time-picker">
+        <button class="time-btn" data-tier="2min">2 minutes</button>
+        <button class="time-btn" data-tier="5min">5 minutes</button>
+        <button class="time-btn" data-tier="15min">15 minutes</button>
+        <button class="time-btn" data-tier="30min">30 minutes</button>
+        <button class="time-btn" data-tier="60min">60 mins</button>
+      </div>
+    </section>
+
+    <!-- Screen 2: your activity -->
+    <section id="result-screen" hidden>
+      <header class="result-head">
+        <p class="eyebrow">You've got</p>
+        <p class="result-time" id="result-time"></p>
+      </header>
+      <h2 id="activity-name"></h2>
+      <a id="activity-link" class="activity-link" href="#" target="_blank" rel="noopener" hidden>Open guide →</a>
+      <div class="result-actions">
+        <button id="shuffle-btn" class="ghost-btn">Not this — show me another</button>
+        <button id="restart-btn" class="ghost-btn">Pick a different time</button>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
