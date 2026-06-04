@@ -11,6 +11,7 @@
 </head>
 <body>
   <main>
+
     <!-- Screen 1: pick a time -->
     <section id="picker-screen">
       <header class="intro">
@@ -26,7 +27,17 @@
       </div>
     </section>
 
-    <!-- Screen 2: your activity -->
+    <!-- Screen 2: how are you feeling before? -->
+    <section id="before-screen" hidden>
+      <header class="result-head">
+        <p class="eyebrow">Before you begin</p>
+        <p class="checkin-title">How are you feeling right now?</p>
+        <p class="checkin-sub">1 = very flat &nbsp;·&nbsp; 10 = really good</p>
+      </header>
+      <div class="score-picker" id="before-picker"></div>
+    </section>
+
+    <!-- Screen 3: your activity -->
     <section id="result-screen" hidden>
       <header class="result-head">
         <p class="eyebrow">You've got</p>
@@ -35,10 +46,31 @@
       <h2 id="activity-name"></h2>
       <a id="activity-link" class="activity-link" href="#" target="_blank" rel="noopener" hidden>Open guide →</a>
       <div class="result-actions">
+        <button id="done-btn" class="done-btn">Done — how do I feel now?</button>
         <button id="shuffle-btn" class="ghost-btn">Not this — show me another</button>
         <button id="restart-btn" class="ghost-btn">Pick a different time</button>
       </div>
     </section>
+
+    <!-- Screen 4: how do you feel after? -->
+    <section id="after-screen" hidden>
+      <header class="result-head">
+        <p class="eyebrow">You did it</p>
+        <p class="checkin-title">How do you feel now?</p>
+        <p class="checkin-sub">1 = very flat &nbsp;·&nbsp; 10 = really good</p>
+      </header>
+      <div class="score-picker" id="after-picker"></div>
+    </section>
+
+    <!-- Screen 5: saved -->
+    <section id="saved-screen" hidden>
+      <div class="saved-content">
+        <p class="saved-icon">✓</p>
+        <p class="saved-msg">Got it — saved.</p>
+        <button id="again-btn" class="ghost-btn">Take another me-time</button>
+      </div>
+    </section>
+
   </main>
   <script src="app.js"></script>
 </body>
