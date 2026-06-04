@@ -114,3 +114,81 @@ h1 {
 }
 
 .ghost-btn:hover { color: var(--accent); border-color: var(--accent); }
+/* ── Splash screen ── */
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(140% 120% at 50% 0%, var(--bg-soft) 0%, var(--bg) 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  cursor: pointer;
+  transition: opacity 0.7s ease;
+}
+
+#splash-screen.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-glow {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(191, 107, 70, 0.18) 0%, transparent 65%);
+  border-radius: 50%;
+  animation: splashGlow 5s ease-in-out infinite;
+}
+
+@keyframes splashGlow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+.splash-content { position: relative; text-align: center; z-index: 1; }
+
+.splash-title {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 4rem;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: splashRise 1s ease-out 0.15s forwards;
+}
+
+.splash-sub {
+  font-family: "Karla", sans-serif;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: splashRise 0.9s ease-out 0.65s forwards;
+}
+
+.splash-hint {
+  font-family: "Karla", sans-serif;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  margin-top: 60px;
+  opacity: 0;
+  animation: hintAppear 0.8s ease-out 1.4s both, hintPulse 2.5s ease-in-out 2.2s infinite;
+}
+
+@keyframes splashRise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hintAppear {
+  from { opacity: 0; }
+  to { opacity: 0.45; }
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.6; }
+}
