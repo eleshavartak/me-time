@@ -12,17 +12,14 @@ const resultScreen = document.getElementById("result-screen");
 const afterScreen  = document.getElementById("after-screen");
 const savedScreen  = document.getElementById("saved-screen");
 const allScreens   = [pickerScreen, beforeScreen, resultScreen, afterScreen, savedScreen];
-// Splash — auto-dismisses after 2.5s, or tap to skip.
+// Splash — shows for 1.5s then fades out.
 (function () {
   const splash = document.getElementById("splash-screen");
   if (!splash) return;
-  function dismiss() {
-    if (splash.classList.contains("hide")) return;
+  setTimeout(() => {
     splash.classList.add("hide");
-    splash.addEventListener("transitionend", () => { splash.style.display = "none"; }, { once: true });
-  }
-  setTimeout(dismiss, 2500);
-  splash.addEventListener("click", dismiss);
+    setTimeout(() => { splash.style.display = "none"; }, 500);
+  }, 1500);
 }());
 const resultTime   = document.getElementById("result-time");
 const activityName = document.getElementById("activity-name");
