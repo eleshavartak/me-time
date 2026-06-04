@@ -23,10 +23,111 @@ body {
   line-height: 1.5;
 }
 
-main { width: 100%; max-width: 440px; }
+main {
+  width: 100%;
+  max-width: 440px;
+}
 
-/* Screen 1: picker */
-.intro { text-align: center; margin-bottom: 36px; }
+/* ─── Screen transitions ─── */
+section {
+  animation: screenFade 0.35s ease forwards;
+}
+
+@keyframes screenFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Splash screen ─── */
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+#splash-screen.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-glow {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+  position: absolute;
+  animation: pulse 2.8s ease-in-out infinite;
+}
+
+.splash-title {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 2.8rem;
+  color: var(--ink);
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.3s;
+  position: relative;
+}
+
+.splash-sub {
+  font-family: "Karla", sans-serif;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.6s;
+  position: relative;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%       { transform: scale(1.14); opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Screen 1: Intro ─── */
+#intro-screen {
+  text-align: center;
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 48px;
+}
+
+.intro-title {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 2.8rem;
+  letter-spacing: -0.01em;
+}
+
+.intro-body {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+/* ─── Screen 2: Picker ─── */
+.intro {
+  text-align: center;
+  margin-bottom: 36px;
+}
 
 h1 {
   font-family: "Fraunces", serif;
@@ -35,70 +136,165 @@ h1 {
   letter-spacing: -0.01em;
 }
 
-.subtitle { color: var(--ink-soft); font-size: 1.05rem; margin-top: 6px; }
+.subtitle {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin-top: 6px;
+}
 
-.time-picker { display: flex; flex-direction: column; gap: 12px; }
+.time-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .time-btn {
   font-family: "Karla", sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--ink);
   background: var(--bg-soft);
-  border: 1px solid var(--accent-soft);
+  border: 1.5px solid var(--accent-soft);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 18px 20px;
   cursor: pointer;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  text-align: left;
+  transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.15s ease;
 }
 
-.time-btn:hover {
+.time-btn:hover,
+.time-btn.selected {
   border-color: var(--accent);
+  background: #fff;
   box-shadow: var(--shadow);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
-/* Screen 2: result */
-.result-head { text-align: center; margin-bottom: 28px; }
+.time-btn.selected {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: none;
+}
+
+/* ─── Check-in screens (before & after) ─── */
+.result-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
 
 .eyebrow {
   color: var(--ink-soft);
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.result-time {
+.checkin-title {
   font-family: "Fraunces", serif;
   font-weight: 600;
-  font-size: 1.5rem;
-  margin-top: 4px;
+  font-size: 1.6rem;
+  margin-top: 8px;
+  line-height: 1.3;
+}
+
+/* ─── Emoji picker ─── */
+.emoji-picker {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.emoji-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-soft);
+  border: 1.5px solid var(--accent-soft);
+  border-radius: 14px;
+  padding: 14px 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.emoji-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.emoji-btn .emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.emoji-btn .emoji-label {
+  font-family: "Karla", sans-serif;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ─── Screen 4: Activity ─── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  font-family: "Karla", sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0 0 32px 0;
+  transition: color 0.15s ease;
+}
+
+.back-btn:hover { color: var(--accent); }
+
+.activity-content {
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0 40px;
 }
 
 #activity-name {
   font-family: "Fraunces", serif;
   font-weight: 600;
   font-size: 2rem;
-  line-height: 1.3;
+  line-height: 1.35;
   text-align: center;
 }
-
-.activity-link {
-  display: block;
-  text-align: center;
-  margin-top: 18px;
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.activity-link:hover { text-decoration: underline; }
 
 .result-actions {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 36px;
+}
+
+/* ─── Buttons ─── */
+.done-btn {
+  font-family: "Karla", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 12px;
+  padding: 18px;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  width: 100%;
+}
+
+.done-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
 }
 
 .ghost-btn {
@@ -106,65 +302,51 @@ h1 {
   font-size: 1rem;
   color: var(--ink-soft);
   background: transparent;
-  border: 1px solid var(--accent-soft);
+  border: 1.5px solid var(--accent-soft);
   border-radius: 12px;
-  padding: 14px;
+  padding: 16px;
   cursor: pointer;
+  width: 100%;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.ghost-btn:hover { color: var(--accent); border-color: var(--accent); }
-/* ── Splash screen ── */
-#splash-screen {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(140% 120% at 50% 0%, var(--bg-soft) 0%, var(--bg) 70%);
+.ghost-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ─── Screen 5: After check-in additions ─── */
+.toast {
+  margin-top: 32px;
+  background: var(--bg-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
-  transition: opacity 0.5s ease;
+  gap: 8px;
+  animation: fadeUp 0.4s ease forwards;
 }
 
-#splash-screen.hide { opacity: 0; pointer-events: none; }
-
-.splash-glow {
-  position: absolute;
-  width: 380px;
-  height: 380px;
-  background: radial-gradient(circle, rgba(191, 107, 70, 0.18) 0%, transparent 65%);
-  border-radius: 50%;
-  animation: splashGlow 5s ease-in-out infinite;
+.toast-icon {
+  color: var(--accent);
+  font-size: 0.8rem;
 }
 
-@keyframes splashGlow {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.12); opacity: 1; }
+.after-again-btn {
+  margin-top: 16px;
+  animation: fadeUp 0.4s ease forwards 0.2s;
+  opacity: 0;
 }
 
-.splash-content { position: relative; text-align: center; z-index: 1; }
-
-.splash-title {
+/* ─── Result-time (kept for JS compatibility) ─── */
+.result-time {
   font-family: "Fraunces", serif;
   font-weight: 600;
-  font-size: 4rem;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-  opacity: 0;
-  transform: translateY(12px);
-  animation: splashRise 1s ease-out 0.15s forwards;
-}
-
-.splash-sub {
-  font-family: "Karla", sans-serif;
-  font-size: 1.1rem;
-  color: var(--ink-soft);
-  margin-top: 12px;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: splashRise 0.9s ease-out 0.65s forwards;
-}
-
-@keyframes splashRise {
-  to { opacity: 1; transform: translateY(0); }
+  font-size: 1.5rem;
+  margin-top: 4px;
 }

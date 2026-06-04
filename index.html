@@ -10,10 +10,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Splash screen -->
+  <div id="splash-screen">
+    <div class="splash-glow"></div>
+    <p class="splash-title">Me Time</p>
+    <p class="splash-sub">This moment is yours.</p>
+  </div>
+
   <main>
 
-    <!-- Screen 1: pick a time -->
-    <section id="picker-screen">
+    <!-- Screen 1: Warm intro -->
+    <section id="intro-screen" hidden>
+      <div class="intro-content">
+        <h1 class="intro-title">Me Time</h1>
+        <p class="intro-body">Take some time for yourself.<br>Even a few minutes counts.</p>
+        <button id="intro-next-btn" class="done-btn">I'm ready</button>
+      </div>
+    </section>
+
+    <!-- Screen 2: Pick a time -->
+    <section id="picker-screen" hidden>
       <header class="intro">
         <h1>Me Time</h1>
         <p class="subtitle">Roughly how much time do you have?</p>
@@ -23,63 +40,46 @@
         <button class="time-btn" data-tier="5min">5 minutes</button>
         <button class="time-btn" data-tier="15min">15 minutes</button>
         <button class="time-btn" data-tier="30min">30 minutes</button>
-        <button class="time-btn" data-tier="60min">60 mins</button>
+        <button class="time-btn" data-tier="60min">60 minutes</button>
       </div>
     </section>
 
-    <!-- Screen 2: how are you feeling before? -->
+    <!-- Screen 3: Before check-in -->
     <section id="before-screen" hidden>
       <header class="result-head">
         <p class="eyebrow">Before you begin</p>
         <p class="checkin-title">How are you feeling right now?</p>
-        <p class="checkin-sub">1 = very flat &nbsp;·&nbsp; 10 = really good</p>
       </header>
-      <div class="score-picker" id="before-picker"></div>
+      <div class="emoji-picker" id="before-picker"></div>
     </section>
 
-    <!-- Screen 3: your activity -->
+    <!-- Screen 4: Activity -->
     <section id="result-screen" hidden>
-      <header class="result-head">
-        <p class="eyebrow">You've got</p>
-        <p class="result-time" id="result-time"></p>
-      </header>
-      <h2 id="activity-name"></h2>
-      <a id="activity-link" class="activity-link" href="#" target="_blank" rel="noopener" hidden>Open guide →</a>
+      <button id="back-btn" class="back-btn">← Back</button>
+      <div class="activity-content">
+        <h2 id="activity-name"></h2>
+      </div>
       <div class="result-actions">
         <button id="done-btn" class="done-btn">Done — how do I feel now?</button>
-        <button id="shuffle-btn" class="ghost-btn">Not this — show me another</button>
-        <button id="restart-btn" class="ghost-btn">Pick a different time</button>
+        <button id="shuffle-btn" class="ghost-btn">Try something else</button>
       </div>
     </section>
 
-    <!-- Screen 4: how do you feel after? -->
+    <!-- Screen 5: After check-in -->
     <section id="after-screen" hidden>
       <header class="result-head">
         <p class="eyebrow">You did it</p>
         <p class="checkin-title">How do you feel now?</p>
-        <p class="checkin-sub">1 = very flat &nbsp;·&nbsp; 10 = really good</p>
       </header>
-      <div class="score-picker" id="after-picker"></div>
-    </section>
-
-    <!-- Screen 5: saved -->
-    <section id="saved-screen" hidden>
-      <div class="saved-content">
-        <p class="saved-icon">✓</p>
-        <p class="saved-msg">Got it — saved.</p>
-        <button id="again-btn" class="ghost-btn">Take another me-time</button>
+      <div class="emoji-picker" id="after-picker"></div>
+      <div id="toast" class="toast" hidden>
+        <span class="toast-icon">✦</span> Saving for future recommendations
       </div>
+      <button id="again-btn" class="ghost-btn after-again-btn" hidden>Need some more me time?</button>
     </section>
 
   </main>
+
   <script src="app.js"></script>
 </body>
 </html>
-<!-- Splash screen -->
-<div id="splash-screen">
-  <div class="splash-glow"></div>
-  <div class="splash-content">
-    <h1 class="splash-title">Me Time</h1>
-    <p class="splash-sub">This moment is yours.</p>
-  </div>
-</div>

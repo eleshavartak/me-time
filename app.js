@@ -1,59 +1,77 @@
 // --- Me Time ---
 
-let activities    = [];
-let currentTier   = null;
+let activities       = [];
+let currentTier      = null;
 let currentTimeLabel = "";
 let currentActivity  = null;
-let beforeScore   = null;
+let beforeScore      = null;
 
+// Screens
+const splashScreen = document.getElementById("splash-screen");
+const introScreen  = document.getElementById("intro-screen");
 const pickerScreen = document.getElementById("picker-screen");
 const beforeScreen = document.getElementById("before-screen");
 const resultScreen = document.getElementById("result-screen");
 const afterScreen  = document.getElementById("after-screen");
-const savedScreen  = document.getElementById("saved-screen");
-const allScreens   = [pickerScreen, beforeScreen, resultScreen, afterScreen, savedScreen];
-// Splash — shows for 1.5s then fades out.
-(function () {
-  const splash = document.getElementById("splash-screen");
-  if (!splash) return;
-  setTimeout(() => {
-    splash.classList.add("hide");
-    setTimeout(() => { splash.style.display = "none"; }, 500);
-  }, 1500);
-}());
-const resultTime   = document.getElementById("result-time");
+const allScreens   = [introScreen, pickerScreen, beforeScreen, resultScreen, afterScreen];
+
+// Elements
 const activityName = document.getElementById("activity-name");
-const activityLink = document.getElementById("activity-link");
 const doneBtn      = document.getElementById("done-btn");
 const shuffleBtn   = document.getElementById("shuffle-btn");
-const restartBtn   = document.getElementById("restart-btn");
+const backBtn      = document.getElementById("back-btn");
 const againBtn     = document.getElementById("again-btn");
+const toast        = document.getElementById("toast");
+const introNextBtn = document.getElementById("intro-next-btn");
 
-// Build the 1–10 score buttons for a given container.
-function buildScorePicker(containerId, onSelect) {
+// ─── Splash ───
+(function () {
+  setTimeout(() => {
+    splashScreen.classList.add("hide");
+    setTimeout(() => {
+      splashScreen.style.display = "none";
+      showScreen(introScreen);
+    }, 500);
+  }, 1500);
+})();
+
+// ─── Emoji scale ───
+const emojis = [
+  { emoji: "😔", label: "Very flat" },
+  { emoji: "😕", label: "Low" },
+  { emoji: "😐", label: "Okay" },
+  { emoji: "🙂", label: "Good" },
+  { emoji: "😊", label: "Really good" }
+];
+
+function buildEmojiPicker(containerId, onSelect) {
   const container = document.getElementById(containerId);
-  for (let i = 1; i <= 10; i++) {
+  emojis.forEach((item, index) => {
     const btn = document.createElement("button");
-    btn.className = "score-btn";
-    btn.textContent = i;
-    btn.addEventListener("click", () => onSelect(i));
+    btn.className = "emoji-btn";
+    btn.innerHTML = `<span class="emoji">${item.emoji}</span><span class="emoji-label">${item.label}</span>`;
+    // Map 5 emojis to a 1–10 scale: 1, 3, 5, 7, 10
+    const scoreMap = [1, 3, 5, 7, 10];
+    btn.addEventListener("click", () => onSelect(scoreMap[index]));
     container.appendChild(btn);
-  }
+  });
 }
 
-// Before: record the score, then show the activity.
-buildScorePicker("before-picker", (score) => {
+buildEmojiPicker("before-picker", (score) => {
   beforeScore = score;
   showActivity();
 });
 
-// After: record the score, save the session, go to saved.
-buildScorePicker("after-picker", (score) => {
+buildEmojiPicker("after-picker", (score) => {
   saveCheckin(score);
-  showScreen(savedScreen);
+  // Show toast then reveal again button
+  toast.hidden = false;
+  setTimeout(() => {
+    againBtn.hidden = false;
+  }, 600);
 });
 
-// Load the activity menu.
+// ─── Load activities ───
 fetch("activities.json")
   .then((res) => res.json())
   .then((data) => { activities = data.activities; })
@@ -62,56 +80,61 @@ fetch("activities.json")
     console.error("Failed to load activities.json:", err);
   });
 
-// Screen 1: tap a time → go to the before-check.
+// ─── Intro screen ───
+introNextBtn.addEventListener("click", () => showScreen(pickerScreen));
+
+// ─── Time picker ───
 document.querySelectorAll(".time-btn").forEach((button) => {
   button.addEventListener("click", () => {
+    // Visual selected state
+    document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("selected"));
+    button.classList.add("selected");
+
     currentTier      = button.dataset.tier;
     currentTimeLabel = button.textContent;
     currentActivity  = null;
     beforeScore      = null;
-    showScreen(beforeScreen);
+
+    // Small delay so the selected state is visible before screen change
+    setTimeout(() => showScreen(beforeScreen), 180);
   });
 });
 
-// Screen 3 actions.
+// ─── Activity screen buttons ───
 shuffleBtn.addEventListener("click", showActivity);
-restartBtn.addEventListener("click", () => { beforeScore = null; showScreen(pickerScreen); });
-doneBtn.addEventListener("click",    () => showScreen(afterScreen));
+backBtn.addEventListener("click",    () => showScreen(pickerScreen));
+doneBtn.addEventListener("click",    () => {
+  toast.hidden  = true;
+  againBtn.hidden = true;
+  showScreen(afterScreen);
+});
+againBtn.addEventListener("click",   () => {
+  beforeScore = null;
+  toast.hidden = true;
+  againBtn.hidden = true;
+  // Reset time button selected state
+  document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("selected"));
+  showScreen(introScreen);
+});
 
-// Screen 5: start again.
-againBtn.addEventListener("click", () => { beforeScore = null; showScreen(pickerScreen); });
-
-// Pick and display a random activity for the current tier.
+// ─── Show activity ───
 function showActivity() {
   const matches = activities.filter((a) => a.tiers.includes(currentTier));
-
   if (matches.length === 0) {
     activityName.textContent = "Nothing here yet — pick another time.";
-    activityLink.hidden = true;
     showScreen(resultScreen);
     return;
   }
-
   let options = matches;
   if (matches.length > 1 && currentActivity) {
     options = matches.filter((a) => a.id !== currentActivity.id);
   }
   currentActivity = options[Math.floor(Math.random() * options.length)];
-
-  resultTime.textContent = currentTimeLabel;
   activityName.textContent = currentActivity.name;
-
-  if (currentActivity.links && currentActivity.links.length > 0) {
-    activityLink.href = currentActivity.links[Math.floor(Math.random() * currentActivity.links.length)];
-    activityLink.hidden = false;
-  } else {
-    activityLink.hidden = true;
-  }
-
   showScreen(resultScreen);
 }
 
-// Save the completed session: before score, after score, and the delta.
+// ─── Save check-in ───
 function saveCheckin(afterScore) {
   const checkins = JSON.parse(localStorage.getItem("me-time-checkins") || "[]");
   checkins.push({
@@ -122,13 +145,13 @@ function saveCheckin(afterScore) {
     category:     currentActivity.category,
     beforeScore,
     afterScore,
-    delta:        afterScore - beforeScore,   // positive = felt better
+    delta:        afterScore - beforeScore,
     date:         new Date().toISOString()
   });
   localStorage.setItem("me-time-checkins", JSON.stringify(checkins));
 }
 
-// Hide every screen, show the target one.
+// ─── Screen helper ───
 function showScreen(screen) {
   allScreens.forEach((s) => { s.hidden = true; });
   screen.hidden = false;
