@@ -64,11 +64,8 @@ buildEmojiPicker("before-picker", (score) => {
 
 buildEmojiPicker("after-picker", (score) => {
   saveCheckin(score);
-  // Show toast then reveal again button
   toast.hidden = false;
-  setTimeout(() => {
-    againBtn.hidden = false;
-  }, 600);
+  againBtn.hidden = false;
 });
 
 // ─── Load activities ───
