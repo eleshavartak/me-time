@@ -32,7 +32,7 @@ const introNextBtn = document.getElementById("intro-next-btn");
       splashScreen.style.display = "none";
       showScreen(introScreen);
     }, 500);
-  }, 1500);
+  }, 2500);
 })();
 
 // ─── Emoji scale ───
@@ -65,7 +65,9 @@ buildEmojiPicker("before-picker", (score) => {
 buildEmojiPicker("after-picker", (score) => {
   saveCheckin(score);
   toast.hidden = false;
-  againBtn.hidden = false;
+  setTimeout(() => {
+    againBtn.hidden = false;
+  }, 2000);
 });
 
 // ─── Load activities ───
