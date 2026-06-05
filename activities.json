@@ -1,21 +1,196 @@
 {
   "activities": [
-    { "id": "breathing", "name": "Do a short breathing exercise", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
-    { "id": "unclench-jaw", "name": "Unclench your jaw and drop your shoulders", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
-    { "id": "soles-of-feet", "name": "Feel the soles of your feet", "tiers": ["2min", "5min"], "category": "ground", "note": "Kristin Neff", "links": ["https://self-compassion.org/self-compassion-practices/"] },
-    { "id": "step-outside", "name": "Step outside for some fresh air", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
-    { "id": "look-far", "name": "Look out a window at something far away", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
-    { "id": "sit-still", "name": "Sit and do nothing, or lie down", "tiers": ["2min", "5min"], "category": "ground", "note": null, "links": [] },
-    { "id": "sunlight", "name": "Get some sunlight", "tiers": ["2min", "5min"], "category": "ground", "note": "Best in the morning", "links": [] },
-    { "id": "warm-drink", "name": "Make a warm drink and sip it slowly, no phone", "tiers": ["5min"], "category": "ground", "note": null, "links": [] },
-    { "id": "favourite-song", "name": "Put on one song you love", "tiers": ["2min", "5min"], "category": "lighten", "note": null, "links": [] },
-    { "id": "self-compassion-break", "name": "Take a self-compassion break", "tiers": ["5min"], "category": "kindness", "note": "Kristin Neff", "links": ["https://self-compassion.org/self-compassion-practices/"] },
-    { "id": "pranayam", "name": "Do some pranayam", "tiers": ["15min", "30min"], "category": "ground", "note": "Saurabh Bothra", "links": ["https://youtu.be/I77hh5I69gA", "https://youtu.be/AzfLp4G1KU4"] },
-    { "id": "doodle", "name": "Doodle freely, no goal", "tiers": ["15min", "30min"], "category": "create", "note": null, "links": [] },
-    { "id": "standup", "name": "Watch a stand-up comedy set", "tiers": ["15min", "30min"], "category": "lighten", "note": null, "links": [] },
-    { "id": "stretch", "name": "Do a slow full-body stretch or shoulder rolls", "tiers": ["2min", "5min"], "category": "move", "note": null, "links": [] },
-    { "id": "workout", "name": "Go to the gym or do a workout", "tiers": ["30min", "60min"], "category": "move", "note": null, "links": [] },
-    { "id": "call-friend", "name": "Call or meet a friend for a proper chat", "tiers": ["30min", "60min"], "category": "connect", "note": null, "links": [] },
-    { "id": "make-art", "name": "Paint or make some art", "tiers": ["30min", "60min"], "category": "create", "note": null, "links": [] }
+    {
+      "id": "breathing",
+      "name": "Take a few slow, deep breaths",
+      "tiers": ["2min", "5min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "unclench-jaw",
+      "name": "Unclench your jaw, drop your shoulders, and take one slow breath",
+      "tiers": ["2min", "5min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "soles-of-feet",
+      "name": "Try the soles of your feet practice",
+      "tiers": ["2min", "5min"],
+      "category": "ground",
+      "note": "Kristin Neff",
+      "links": ["https://self-compassion.org/practices/soles-of-the-feet-2/"]
+    },
+    {
+      "id": "step-outside",
+      "name": "Step outside, even just for a moment",
+      "tiers": ["2min", "5min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "look-far",
+      "name": "Find something far away and let your eyes rest on it. Describe it to yourself",
+      "tiers": ["2min", "5min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "sit-still",
+      "name": "Sit quietly and do nothing, or just lie down",
+      "tiers": ["2min", "5min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "sunlight",
+      "name": "Step into some sunlight",
+      "tiers": ["2min", "5min"],
+      "category": "ground",
+      "note": "Best in the morning",
+      "links": []
+    },
+    {
+      "id": "warm-drink",
+      "name": "Make a warm drink, keep your phone aside, sit with it, and sip it slowly",
+      "tiers": ["5min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "favourite-song",
+      "name": "Put on one song you love",
+      "tiers": ["2min", "5min"],
+      "category": "lighten",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "self-compassion-break",
+      "name": "Try a self-compassion break",
+      "tiers": ["5min"],
+      "category": "kindness",
+      "note": "Kristin Neff",
+      "links": ["https://self-compassion.org/practices/general-self-compassion-break-2/"]
+    },
+    {
+      "id": "pranayam",
+      "name": "Do some pranayam",
+      "tiers": ["15min", "30min"],
+      "category": "ground",
+      "note": "Saurabh Bothra",
+      "links": ["https://youtu.be/I77hh5I69gA", "https://youtu.be/AzfLp4G1KU4"]
+    },
+    {
+      "id": "doodle",
+      "name": "Doodle something — no goal, no judgment",
+      "tiers": ["15min", "30min"],
+      "category": "create",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "standup",
+      "name": "Watch a stand-up comedy set",
+      "tiers": ["15min", "30min"],
+      "category": "lighten",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "stretch",
+      "name": "Do a slow stretch — shoulders, neck, whatever needs it",
+      "tiers": ["2min", "5min"],
+      "category": "move",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "workout",
+      "name": "Go for a workout",
+      "tiers": ["30min", "60min"],
+      "category": "move",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "call-friend",
+      "name": "Call a friend — not a voice note, a proper chat",
+      "tiers": ["30min", "60min"],
+      "category": "connect",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "make-art",
+      "name": "Take a pen and paper and just draw — whatever comes to mind",
+      "tiers": ["30min", "60min"],
+      "category": "create",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "short-walk",
+      "name": "Go for a short walk",
+      "tiers": ["15min"],
+      "category": "move",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "journal",
+      "name": "Journal — write whatever's on your mind, no filter",
+      "tiers": ["15min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "body-scan",
+      "name": "Do a body scan — lie down and notice each part of you, slowly",
+      "tiers": ["15min"],
+      "category": "ground",
+      "note": null,
+      "links": ["https://youtu.be/kQ89ttuCNlI?si=nvnm2qh6r4oZA6rF"]
+    },
+    {
+      "id": "get-something-to-eat",
+      "name": "Get something to eat, slowly and without distraction",
+      "tiers": ["15min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "watch-episode",
+      "name": "Watch an episode of something you love",
+      "tiers": ["60min"],
+      "category": "lighten",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "long-walk",
+      "name": "Go for a long walk",
+      "tiers": ["60min"],
+      "category": "move",
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "read",
+      "name": "Pick up that book you've been meaning to read",
+      "tiers": ["60min"],
+      "category": "ground",
+      "note": null,
+      "links": []
+    }
   ]
 }

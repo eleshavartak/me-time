@@ -18,6 +18,7 @@ const allScreens   = [introScreen, pickerScreen, beforeScreen, resultScreen, aft
 
 // Elements
 const activityName  = document.getElementById("activity-name");
+const activityLink  = document.getElementById("activity-link");
 const doneBtn       = document.getElementById("done-btn");
 const shuffleBtn    = document.getElementById("shuffle-btn");
 const backBtn       = document.getElementById("back-btn");
@@ -214,6 +215,14 @@ function showActivity() {
   }
   currentActivity = options[Math.floor(Math.random() * options.length)];
   activityName.textContent = currentActivity.name;
+
+  if (currentActivity.links && currentActivity.links.length > 0) {
+    activityLink.href = currentActivity.links[Math.floor(Math.random() * currentActivity.links.length)];
+    activityLink.removeAttribute("hidden");
+  } else {
+    activityLink.setAttribute("hidden", "");
+  }
+
   showScreen(resultScreen);
 }
 
