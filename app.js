@@ -102,18 +102,17 @@ document.querySelectorAll(".time-btn").forEach((button) => {
 // ─── Activity screen buttons ───
 shuffleBtn.addEventListener("click", showActivity);
 backBtn.addEventListener("click",    () => showScreen(pickerScreen));
-doneBtn.addEventListener("click",    () => {
-  toast.hidden  = true;
+doneBtn.addEventListener("click", () => {
+  toast.hidden = true;
   againBtn.hidden = true;
   showScreen(afterScreen);
 });
-againBtn.addEventListener("click",   () => {
+againBtn.addEventListener("click", () => {
   beforeScore = null;
   toast.hidden = true;
   againBtn.hidden = true;
-  // Reset time button selected state
   document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("selected"));
-  showScreen(introScreen);
+  showScreen(pickerScreen);
 });
 
 // ─── Show activity ───
