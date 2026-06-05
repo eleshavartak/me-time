@@ -218,9 +218,9 @@ function showActivity() {
 
   if (currentActivity.links && currentActivity.links.length > 0) {
     activityLink.href = currentActivity.links[Math.floor(Math.random() * currentActivity.links.length)];
-    activityLink.removeAttribute("hidden");
+    activityLink.style.display = "block";
   } else {
-    activityLink.setAttribute("hidden", "");
+    activityLink.style.display = "none";
   }
 
   showScreen(resultScreen);
