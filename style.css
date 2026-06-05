@@ -315,7 +315,41 @@ h1 {
   border-color: var(--accent);
 }
 
-/* ─── Screen 5: After check-in additions ─── */
+/* ─── Acknowledgement text ─── */
+.ack-text {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--ink);
+  line-height: 1.6;
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.emoji-btn.selected {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.emoji-btn.selected .emoji-label {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.emoji-btn.dimmed {
+  background: transparent;
+  border-color: transparent;
+}
+
+.emoji-btn.dimmed .emoji-label {
+  color: var(--accent-soft);
+}
+
+.ack-btn {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* ─── Toast italic ─── */
 .toast {
   margin-top: 32px;
   background: var(--bg-soft);
@@ -323,6 +357,7 @@ h1 {
   border-radius: 12px;
   padding: 14px 18px;
   font-size: 0.9rem;
+  font-style: italic;
   color: var(--ink-soft);
   text-align: center;
   display: flex;
@@ -335,6 +370,7 @@ h1 {
 .toast-icon {
   color: var(--accent);
   font-size: 0.8rem;
+  font-style: normal;
 }
 
 .after-again-btn {

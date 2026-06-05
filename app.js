@@ -5,6 +5,7 @@ let currentTier      = null;
 let currentTimeLabel = "";
 let currentActivity  = null;
 let beforeScore      = null;
+let beforeEmojiIndex = null;
 
 // Screens
 const splashScreen = document.getElementById("splash-screen");
@@ -16,13 +17,16 @@ const afterScreen  = document.getElementById("after-screen");
 const allScreens   = [introScreen, pickerScreen, beforeScreen, resultScreen, afterScreen];
 
 // Elements
-const activityName = document.getElementById("activity-name");
-const doneBtn      = document.getElementById("done-btn");
-const shuffleBtn   = document.getElementById("shuffle-btn");
-const backBtn      = document.getElementById("back-btn");
-const againBtn     = document.getElementById("again-btn");
-const toast        = document.getElementById("toast");
-const introNextBtn = document.getElementById("intro-next-btn");
+const activityName  = document.getElementById("activity-name");
+const doneBtn       = document.getElementById("done-btn");
+const shuffleBtn    = document.getElementById("shuffle-btn");
+const backBtn       = document.getElementById("back-btn");
+const againBtn      = document.getElementById("again-btn");
+const toast         = document.getElementById("toast");
+const introNextBtn  = document.getElementById("intro-next-btn");
+const beforeAck     = document.getElementById("before-ack");
+const beforeAckBtn  = document.getElementById("before-ack-btn");
+const afterAck      = document.getElementById("after-ack");
 
 // ─── Splash ───
 (function () {
@@ -37,37 +41,96 @@ const introNextBtn = document.getElementById("intro-next-btn");
 
 // ─── Emoji scale ───
 const emojis = [
-  { emoji: "😔", label: "Very flat" },
-  { emoji: "😕", label: "Low" },
-  { emoji: "😐", label: "Okay" },
-  { emoji: "🙂", label: "Good" },
-  { emoji: "😊", label: "Really good" }
+  { emoji: "😔", label: "very flat" },
+  { emoji: "😕", label: "low" },
+  { emoji: "😐", label: "okay" },
+  { emoji: "🙂", label: "good" },
+  { emoji: "😊", label: "really good" }
 ];
 
+const scoreMap = [1, 3, 5, 7, 10];
+
+// Before: text + button copy (index 0–4)
+const beforeAcks = [
+  { text: "That's okay. You showed up for yourself anyway.",         btn: "Let's find something that helps" },
+  { text: "It's alright to feel a bit off. You're here, and that counts.", btn: "Let's find something that helps" },
+  { text: "Somewhere in the middle — that's a perfectly valid place to be.", btn: "Let's find something that helps" },
+  { text: "Nice, you're in a decent place.",                         btn: "Let's make the most of this moment" },
+  { text: "Love that for you.",                                      btn: "Let's keep that energy going" }
+];
+
+// After: full copy matrix
+function getAfterAck(beforeIdx, afterIdx) {
+  const bLabel = emojis[beforeIdx].label;
+  const aLabel = emojis[afterIdx].label;
+  const isGood = (idx) => idx >= 3; // Good or Really good
+
+  if (afterIdx > beforeIdx) {
+    // Improved
+    if (isGood(afterIdx)) {
+      return `Before, you were feeling ${bLabel}. Now you're feeling ${aLabel}. That's nice, keep this going.`;
+    }
+    return `Before, you were feeling ${bLabel}. Now you're feeling ${aLabel}. Glad some me time helped.`;
+  } else if (afterIdx === beforeIdx) {
+    // Same
+    if (isGood(afterIdx)) {
+      return `Before, you were feeling ${bLabel}. Still feeling ${aLabel}. You're holding steady, that's great.`;
+    }
+    return `Before, you were feeling ${bLabel}. Still feeling ${aLabel}. That's completely fine — sometimes we just need to be.`;
+  } else {
+    // Dipped
+    if (isGood(afterIdx)) {
+      return `Before, you were feeling ${bLabel}. Now feeling ${aLabel}. Feelings fluctuate — that's completely normal.`;
+    }
+    return `Before, you were feeling ${bLabel}. Now feeling ${aLabel}. This shall pass — sometimes we just need to be.`;
+  }
+}
+
+// ─── Emoji picker builder ───
 function buildEmojiPicker(containerId, onSelect) {
   const container = document.getElementById(containerId);
   emojis.forEach((item, index) => {
     const btn = document.createElement("button");
     btn.className = "emoji-btn";
     btn.innerHTML = `<span class="emoji">${item.emoji}</span><span class="emoji-label">${item.label}</span>`;
-    // Map 5 emojis to a 1–10 scale: 1, 3, 5, 7, 10
-    const scoreMap = [1, 3, 5, 7, 10];
-    btn.addEventListener("click", () => onSelect(scoreMap[index]));
+    btn.addEventListener("click", () => {
+      container.querySelectorAll(".emoji-btn").forEach((b, i) => {
+        b.classList.toggle("selected", i === index);
+        b.classList.toggle("dimmed",   i !== index);
+        if (i !== index) b.disabled = true;
+      });
+      onSelect(index, scoreMap[index]);
+    });
     container.appendChild(btn);
   });
 }
 
-buildEmojiPicker("before-picker", (score) => {
-  beforeScore = score;
-  showActivity();
+buildEmojiPicker("before-picker", (emojiIndex, score) => {
+  beforeScore      = score;
+  beforeEmojiIndex = emojiIndex;
+
+  const ack = beforeAcks[emojiIndex];
+  beforeAck.textContent    = ack.text;
+  beforeAckBtn.textContent = ack.btn;
+  beforeAck.removeAttribute("hidden");
+  beforeAckBtn.removeAttribute("hidden");
 });
 
-buildEmojiPicker("after-picker", (score) => {
+buildEmojiPicker("after-picker", (emojiIndex, score) => {
   saveCheckin(score);
-  toast.hidden = false;
+
+  afterAck.textContent = getAfterAck(beforeEmojiIndex, emojiIndex);
+  afterAck.removeAttribute("hidden");
+
   setTimeout(() => {
-    againBtn.hidden = false;
+    toast.removeAttribute("hidden");
+    toast.style.display = "flex";
   }, 2000);
+
+  setTimeout(() => {
+    againBtn.removeAttribute("hidden");
+    againBtn.style.display = "block";
+  }, 3200);
 });
 
 // ─── Load activities ───
@@ -82,38 +145,60 @@ fetch("activities.json")
 // ─── Intro screen ───
 introNextBtn.addEventListener("click", () => showScreen(pickerScreen));
 
+// ─── Before ack button → activity ───
+beforeAckBtn.addEventListener("click", () => showActivity());
+
 // ─── Time picker ───
 document.querySelectorAll(".time-btn").forEach((button) => {
   button.addEventListener("click", () => {
-    // Visual selected state
     document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("selected"));
     button.classList.add("selected");
-
     currentTier      = button.dataset.tier;
     currentTimeLabel = button.textContent;
     currentActivity  = null;
     beforeScore      = null;
-
-    // Small delay so the selected state is visible before screen change
+    beforeEmojiIndex = null;
     setTimeout(() => showScreen(beforeScreen), 180);
   });
 });
 
 // ─── Activity screen buttons ───
 shuffleBtn.addEventListener("click", showActivity);
-backBtn.addEventListener("click",    () => showScreen(pickerScreen));
+backBtn.addEventListener("click", () => showScreen(pickerScreen));
+
 doneBtn.addEventListener("click", () => {
-  toast.hidden = true;
-  againBtn.hidden = true;
+  resetAfterScreen();
   showScreen(afterScreen);
 });
+
 againBtn.addEventListener("click", () => {
-  beforeScore = null;
-  toast.hidden = true;
-  againBtn.hidden = true;
+  beforeScore      = null;
+  beforeEmojiIndex = null;
+  resetAfterScreen();
   document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("selected"));
   showScreen(pickerScreen);
 });
+
+// ─── Reset after screen ───
+function resetAfterScreen() {
+  toast.setAttribute("hidden", "");
+  toast.style.display = "none";
+  againBtn.setAttribute("hidden", "");
+  againBtn.style.display = "none";
+  afterAck.setAttribute("hidden", "");
+  afterAck.textContent = "";
+  beforeAck.setAttribute("hidden", "");
+  beforeAck.textContent = "";
+  beforeAckBtn.setAttribute("hidden", "");
+  beforeAckBtn.textContent = "";
+
+  ["before-picker", "after-picker"].forEach(id => {
+    document.querySelectorAll(`#${id} .emoji-btn`).forEach(b => {
+      b.disabled = false;
+      b.classList.remove("selected", "dimmed");
+    });
+  });
+}
 
 // ─── Show activity ───
 function showActivity() {
